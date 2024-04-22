@@ -15,9 +15,33 @@
     
   </div>
   <div>
-
+    <h1>Loans</h1>
+    <ul>
+      <li v-for="loan in loans" :key="loan.loanId">
+        {{ loan.loaneeName }}
+      </li>
+    </ul>
   </div>
 </template>
+
+<script setup>
+import searchBar from "../components/searchBar.vue";
+import { ref, onMounted } from 'vue';
+import { fetchLoans } from '../apis/loans'; // Update the path as necessary
+
+const loans = ref([]);
+
+onMounted(async () => {
+  try {
+    const response = await fetchLoans();
+    loans.value = response.data;
+    console.log("Loans loaded:", loans.value); // This will help confirm the data structure
+  } catch (error) {
+    console.error('Failed to load loans:', error);
+  }
+});
+
+</script>
 
 <style scoped>
 .loginLink{
@@ -73,7 +97,3 @@
   }
 }
 </style>
-
-<script setup>
-import searchBar from "../components/searchBar.vue";
-</script>
