@@ -15,10 +15,23 @@
     
   </div>
   <div>
-    <h1>Loans</h1>
+    <h1>Home</h1>
+    <h2>Loans</h2>
     <ul>
       <li v-for="loan in loans" :key="loan.loanId">
         {{ loan.loaneeName }}
+      </li>
+    </ul>
+    <h3>Meteors</h3>
+    <ul>
+      <li v-for="meteor in meteorites" :key="meteor.monnigNumber">
+        {{ meteor.MonnigNumber }}
+      </li>
+    </ul>
+    <h4>All Meteors</h4>
+    <ul>
+      <li v-for="meteors in meteorites" :key="meteors.monnigNumber">
+        {{ meteors.monnigNumber }}
       </li>
     </ul>
   </div>
@@ -27,9 +40,13 @@
 <script setup>
 import searchBar from "../components/searchBar.vue";
 import { ref, onMounted } from 'vue';
-import { fetchLoans } from '../apis/loans'; // Update the path as necessary
+import { fetchLoans } from '../apis/loans';
+import { fetchMeteoriteId } from "../apis/meteorites"; // Update the path as necessary
+import { fetchAllMeteorite } from "../apis/meteorites";
 
 const loans = ref([]);
+const meteorites = ref([]);
+const sampleHistory = ref([]);
 
 onMounted(async () => {
   try {
@@ -40,6 +57,28 @@ onMounted(async () => {
     console.error('Failed to load loans:', error);
   }
 });
+
+onMounted(async () => {
+  try {
+    const response = await fetchMeteoriteId();
+    meteorites.value = response.data;
+    console.log("Meteors loaded:", meteorites.value);
+  } catch (error) {
+    console.error('Failed to load meteorites:', error);
+  }
+});
+
+onMounted(async () => {
+  try {
+    const response = await fetchAllMeteorite();
+    meteorites.value = response.data;
+    console.log("All Meteors loaded:", meteorites.value);
+  } catch (error){
+    console.error('Failed to load all meteorites:', error);
+  }
+});
+
+
 
 </script>
 
