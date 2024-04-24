@@ -25,14 +25,14 @@ body {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #D6D6D6;
+    background-color: #010409;
   }
   a:hover {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #010409;
   }
 }
 
