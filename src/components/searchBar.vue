@@ -1,20 +1,19 @@
 <template>
-  <form action="#" method="get" class="search-form">
-    <label for="search"></label>
+  <form @submit.prevent="onSearch" class="search-form">
     <div class="search-bar">
-      <select name="attributes" class="search-select">
-        <option value="monnigNumber">Monnig Number</option>
-        <option value="Name">Name</option>
-        <option value="Country">Country</option>
-        <option value="mClass">Class</option>
-        <option value="mGroup">Group</option>
-        <option value="yearFound">Year</option>
-        <option value="weight">Weight</option>
-        <option value="subsample">Subsample</option>
+      <select v-model="selectedAttribute" class="search-select">
+        <option value="loanId">ID</option>
+        <option value="loaneeName">Name</option>
+        <option value="loaneeEmail">Email</option>
+        <option value="loaneeAddress">Address</option>
+        <option value="loanStartdate">Start Date</option>
+        <option value="loanDuedate">Due Date</option>
+        <option value="trackingNumber">Tracking Number</option>
+        <option value="status">Status</option>
       </select>
       <input
+        v-model="searchQuery"
         type="text"
-        name="search"
         placeholder="Search"
         size="30"
         class="search-input"
@@ -25,6 +24,27 @@
     </div>
   </form>
 </template>
+
+<script>
+export default {
+  name: "SearchBar",
+  data() {
+    return {
+      selectedAttribute: "loanId", // Default selection
+      searchQuery: ""
+    };
+  },
+  methods: {
+    async onSearch() {
+      if (!this.searchQuery) {
+        alert("Please enter a search query.");
+        return;
+      }
+      this.$emit('search', { attribute: this.selectedAttribute, query: this.searchQuery });
+    }
+  }
+};
+</script>
 
 <style scoped>
 .search-form {
@@ -86,9 +106,3 @@ button:hover {
   filter: brightness(110%);
 }
 </style>
-
-<script>
-export default {
-  name: "SearchBar",
-};
-</script>
