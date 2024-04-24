@@ -5,9 +5,9 @@
       <label class="meteorLabel">Monnig Meteorite Gallery</label>
     </div>
 
-    <searchBar class="centerItem" />
+    <searchBar @search="performSearch" />
 
-    <div  class="rightGroup">
+    <div class="rightGroup">
       <router-link :to="{ name: 'login' }" class="loginLink">
         <span>Login</span>
       </router-link>
@@ -19,19 +19,15 @@
     <h2>Loans</h2>
     <ul>
       <li v-for="loan in loans" :key="loan.loanId">
-        {{ loan.loaneeName }}
-      </li>
-    </ul>
-    <h3>Meteors</h3>
-    <ul>
-      <li v-for="meteor in meteorites" :key="meteor.monnigNumber">
-        {{ meteor.MonnigNumber }}
-      </li>
-    </ul>
-    <h4>All Meteors</h4>
-    <ul>
-      <li v-for="meteors in meteorites" :key="meteors.monnigNumber">
-        {{ meteors.monnigNumber }}
+        <h3>Loan ID: {{ loan.loanId }}</h3>
+        <p>Name: {{ loan.loaneeName }}</p>
+        <p>Institution: {{ loan.loaneeInstitution }}</p>
+        <p>Email: {{ loan.loaneeEmail }}</p>
+        <p>Address: {{ loan.loaneeAddress }}</p>
+        <p>Start Date: {{ loan.loanStartdate }}</p>
+        <p>Due Date: {{ loan.loanDuedate }}</p>
+        <p>Tracking Number: {{ loan.trackingNumber }}</p>
+        <p>Status: {{ loan.status }}</p>
       </li>
     </ul>
   </div>
@@ -39,46 +35,20 @@
 
 <script setup>
 import searchBar from "../components/searchBar.vue";
-import { ref, onMounted } from 'vue';
-import { fetchLoans } from '../apis/loans';
-import { fetchMeteoriteId } from "../apis/meteorites"; // Update the path as necessary
-import { fetchAllMeteorite } from "../apis/meteorites";
+import { ref } from 'vue';
+import { searchLoans } from '../apis/loans'; // Assuming this function is properly exported
 
 const loans = ref([]);
-const meteorites = ref([]);
-const sampleHistory = ref([]);
 
-onMounted(async () => {
+const performSearch = async ({ attribute, query }) => {
   try {
-    const response = await fetchLoans();
-    loans.value = response.data;
-    console.log("Loans loaded:", loans.value); // This will help confirm the data structure
+    const response = await searchLoans(attribute, query);
+    loans.value = response.data;  // Ensure this matches the API response structure
+    console.log("Loans loaded:", loans.value); // Log to confirm data structure
   } catch (error) {
-    console.error('Failed to load loans:', error);
+    console.error('Search failed:', error);
   }
-});
-
-onMounted(async () => {
-  try {
-    const response = await fetchMeteoriteId();
-    meteorites.value = response.data;
-    console.log("Meteors loaded:", meteorites.value);
-  } catch (error) {
-    console.error('Failed to load meteorites:', error);
-  }
-});
-
-onMounted(async () => {
-  try {
-    const response = await fetchAllMeteorite();
-    meteorites.value = response.data;
-    console.log("All Meteors loaded:", meteorites.value);
-  } catch (error){
-    console.error('Failed to load all meteorites:', error);
-  }
-});
-
-
+};
 
 </script>
 
