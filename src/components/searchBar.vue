@@ -36,10 +36,6 @@ export default {
   },
   methods: {
     async onSearch() {
-      if (!this.searchQuery) {
-        alert("Please enter a search query.");
-        return;
-      }
       this.$emit('search', { attribute: this.selectedAttribute, query: this.searchQuery });
     }
   }

@@ -5,7 +5,7 @@
   </div>
   <form class="box">
     <router-link :to="{ name: 'search' }" class="link">
-      <img class="return-img" src="/lol.png" />
+      <img class="return-img" src="/cometL.png" />
     </router-link>
 
     <h3>Sign In</h3>
@@ -99,6 +99,5 @@ button {
 .return-img {
   width: 5rem;
   height: 5rem;
-  border-radius: 50%;
 }
 </style>
