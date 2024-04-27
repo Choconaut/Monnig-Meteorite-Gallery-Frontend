@@ -1,15 +1,15 @@
 <template>
   <form @submit.prevent="onSearch" class="search-form">
     <div class="search-bar">
+      <select v-model="selectedCategory" class="search-select" @change="updateAttributes">
+        <option value="meteorite">Meteorite</option>
+        <option value="loan">Loan</option>
+        <option value="sampleHistory">Sample History</option>
+      </select>
       <select v-model="selectedAttribute" class="search-select">
-        <option value="loanId">ID</option>
-        <option value="loaneeName">Name</option>
-        <option value="loaneeEmail">Email</option>
-        <option value="loaneeAddress">Address</option>
-        <option value="loanStartdate">Start Date</option>
-        <option value="loanDuedate">Due Date</option>
-        <option value="trackingNumber">Tracking Number</option>
-        <option value="status">Status</option>
+        <option v-for="attribute in currentAttributes" :value="attribute.value" :key="attribute.value">
+          {{ attribute.text }}
+        </option>
       </select>
       <input
         v-model="searchQuery"
@@ -18,7 +18,7 @@
         size="30"
         class="search-input"
       />
-      <button>
+      <button type="submit">
         <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
       </button>
     </div>
@@ -30,14 +30,62 @@ export default {
   name: "SearchBar",
   data() {
     return {
-      selectedAttribute: "loanId", // Default selection
-      searchQuery: ""
+      selectedCategory: "meteorite",       // Default category
+      selectedAttribute: "monnigNumber", // Default attribute
+      searchQuery: "",
+      attributes:{
+        meteorite: [
+          {value: "monnigNumber", text: "Monnig Number"},
+          {value: "name", text: "Name"},
+          {value: "country", text: "Country"},
+          {value: "mClass", text: "MClass"},
+          {value: "mGroup", text: "MGroup"},
+          {value: "yearFound", text: "Year Found"},
+          {value: "weight", text: "Weight"},
+          {value: "loanStatus", text: "Loan Status"}
+        ],
+
+        loan: [
+          {value: "loanId", text: "Loan ID"},
+          {value: "loaneeName", text: "Name"},
+          {value: "loaneeEmail", text: "Email"},
+          {value: "loaneeAddress", text: "Address"},
+          {value: "loanStartDate", text: "Start Date"},
+          {value: "loanDueDate", text: "Loan Due Date"},
+          {value: "trackingNumber", text: "Tracking Number"},
+          {value: "status", text: "Status"}
+        ],
+
+        sampleHistory: [
+          {value: "sampleHistoryId", text: "Sample History Id"},
+          {value: "sampleDate", text: "Sample Date"},
+          {value: "sampleCategory", text: "Sample Category"},
+          {value: "sampleNotes", text: "Sample Notes"}
+        ]
+      }
     };
   },
-  methods: {
-    async onSearch() {
-      this.$emit('search', { attribute: this.selectedAttribute, query: this.searchQuery });
+  computed: {
+    currentAttributes() {
+      return this.attributes[this.selectedCategory];
     }
+  },
+  methods: {
+    updateAttributes() {
+      if (this.currentAttributes.length > 0) {
+        this.selectedAttribute = this.currentAttributes[0].value;
+      }
+    },
+    onSearch() {
+      this.$emit('search', {
+        category: this.selectedCategory,
+        attribute: this.selectedAttribute,
+        query: this.searchQuery
+      });
+    }
+  },
+  mounted() {
+    this.updateAttributes(); // Set initial attributes when the component mounts
   }
 };
 </script>
@@ -61,6 +109,8 @@ export default {
   outline: none;
   height: 2.5rem;
   background-color: #010409;
+  color: #D6D6D6;
+  padding-left: 5px;
 }
 
 .search-select {

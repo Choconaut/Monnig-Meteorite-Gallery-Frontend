@@ -16,6 +16,21 @@
   </div>
   <div>
     <h1>Home</h1>
+
+    <h2>Meteorites</h2>
+    <ul>
+      <li v-for="meteorite in meteorites" :key="meteorite.monnigNumber">
+        <h3>Meteorite ID: {{ meteorite.monnigNumber }}</h3>
+        <p>Name: {{ meteorite.name }}</p>
+        <p>Country: {{ meteorite.country }}</p>
+        <p>MClass: {{ meteorite.mClass }}</p>
+        <p>MGroup: {{ meteorite.mGroup }}</p>
+        <p>Year Found: {{ meteorite.yearFound }}</p>
+        <p>Weight: {{ meteorite.weight }}</p>
+        <p>Loan Status: {{ meteorite.loanStatus }}</p>
+      </li>
+    </ul>
+
     <h2>Loans</h2>
     <ul>
       <li v-for="loan in loans" :key="loan.loanId">
@@ -30,19 +45,7 @@
         <p>Status: {{ loan.status }}</p>
       </li>
     </ul>
-    <h2>Meteorites</h2>
-    <ul>
-      <li v-for="meteorite in meteorites" :key="meteorite.monnigNumber">
-        <h3>Meteorite ID: {{ meteorite.monnigNumber }}</h3>
-        <p>Name: {{ meteorite.name }}</p>
-        <p>Country: {{ meteorite.country }}</p>
-        <p>MClass: {{ meteorite.mClass }}g</p>
-        <p>MGroup: {{ meteorite.mGroup }}</p>
-        <p>Year Found: {{ meteorite.yearFound }}</p>
-        <p>Weight: {{ meteorite.weight }}</p>
-        <p>Loan Status: {{ meteorite.loanStatus }}</p>
-      </li>
-    </ul>
+
     <h2>Sample History</h2>
     <ul>
       <li v-for="sampleHist in sampleHistory" :key="sampleHist.sampleHistoryId">
@@ -60,25 +63,28 @@ import searchBar from "../components/searchBar.vue";
 import { ref } from 'vue';
 import { searchLoans } from '../apis/loans';
 import { fetchMeteorites } from '../apis/meteorites';
-import {fetchSampleHistory} from '../apis/sampleHistory'; // Assuming this function is properly exported
+import {fetchSampleHistory} from '../apis/sampleHistory';
 
 const loans = ref([]);
 const meteorites = ref([]);
 const sampleHistory = ref([]);
 
-const performSearch = async ({ attribute, query }) => {
+const performSearch = async ({ category, attribute, query }) => {
+  // console.log("Category:", category);
+  // console.log("Attribute:", attribute);    // Used to check the values being passed before beginning function.
+  // console.log("Query:", query);
   try {
-    if(attribute === 'meteorites'){
-      const response = await fetchMeteorites(attribute, query);
-      meteorites.value = response.data; //Ensure this matches the API response structure
+    if(category === 'meteorite'){
+      const meteoriteResponse = await fetchMeteorites(attribute, query);
+      meteorites.value = meteoriteResponse.data; //Ensure this matches the API response structure
       console.log("Meteorites loaded:", meteorites.value);
-    } else if(attribute === 'sampleHistory'){
-      const response = await fetchSampleHistory(attribute, query);
-      sampleHistory.value = response.data;
+    } else if(category === 'sampleHistory'){
+      const sampleHistoryResponse = await fetchSampleHistory(attribute, query);
+      sampleHistory.value = sampleHistoryResponse.data;
       console.log("Sample History loaded:", sampleHistory.value);
-    } else{
-      const response = await searchLoans(attribute, query);
-      loans.value = response.data;  // Ensure this matches the API response structure
+    } else {
+      const loansResponse = await searchLoans(attribute, query);
+      loans.value = loansResponse.data;  // Ensure this matches the API response structure
       console.log("Loans loaded:", loans.value); // Log to confirm data structure
     }
   } catch (error) {
