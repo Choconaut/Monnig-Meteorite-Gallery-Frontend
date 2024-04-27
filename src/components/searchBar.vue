@@ -35,11 +35,11 @@ export default {
       searchQuery: "",
       attributes:{
         meteorite: [
-          {value: "monnigNumber", text: "Monnig Number"},
-          {value: "name", text: "Name"},
-          {value: "country", text: "Country"},
-          {value: "mClass", text: "MClass"},
-          {value: "mGroup", text: "MGroup"},
+          {value: "MonnigNumber", text: "Monnig Number"},
+          {value: "Name", text: "Name"},
+          {value: "Country", text: "Country"},
+          {value: "MClass", text: "Class"},
+          {value: "MGroup", text: "Group"},
           {value: "yearFound", text: "Year Found"},
           {value: "weight", text: "Weight"},
           {value: "loanStatus", text: "Loan Status"}

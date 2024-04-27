@@ -19,12 +19,12 @@
 
     <h2>Meteorites</h2>
     <ul>
-      <li v-for="meteorite in meteorites" :key="meteorite.monnigNumber">
-        <h3>Meteorite ID: {{ meteorite.monnigNumber }}</h3>
-        <p>Name: {{ meteorite.name }}</p>
-        <p>Country: {{ meteorite.country }}</p>
-        <p>MClass: {{ meteorite.mClass }}</p>
-        <p>MGroup: {{ meteorite.mGroup }}</p>
+      <li v-for="meteorite in meteorites" :key="meteorite.MonnigNumber">
+        <h3>Meteorite ID: {{ meteorite.MonnigNumber }}</h3>
+        <p>Name: {{ meteorite.Name }}</p>
+        <p>Country: {{ meteorite.Country }}</p>
+        <p>MClass: {{ meteorite.MClass }}</p>
+        <p>MGroup: {{ meteorite.MGroup }}</p>
         <p>Year Found: {{ meteorite.yearFound }}</p>
         <p>Weight: {{ meteorite.weight }}</p>
         <p>Loan Status: {{ meteorite.loanStatus }}</p>
