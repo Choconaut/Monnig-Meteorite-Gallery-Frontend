@@ -15,7 +15,7 @@ const fetchMeteoriteId = async (attribute, query) => {
 export { fetchMeteoriteId };
 
 const fetchAllMeteorite = async (attribute, query) => {
-    const url = `http://localhost:8080/api/v1/meteorites?${attribute}=${encodeURIComponent((query))}`;
+    const url = `http://localhost:8080/api/v1/meteorites?${attribute}=${encodeURIComponent(query)}`;
     try {
         const response = await fetch(url);
         if (!response.ok) {  // Check if the HTTP status code is 200-299
@@ -31,9 +31,10 @@ const fetchAllMeteorite = async (attribute, query) => {
 export { fetchAllMeteorite };
 
 
-const fetchMeteorites = async () => {
+const fetchMeteorites = async (attribute, query) => {
+    const url = `http://localhost:8080/api/v1/meteorites?${attribute}=${encodeURIComponent(query)}`;
     try {
-        const response = await fetch(host4);
+        const response = await fetch(url);
         if (!response.ok) {  // Check if the HTTP status code is 200-299
             throw new Error(`HTTP error! Status: ${response.status}`);
         }

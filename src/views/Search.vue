@@ -30,21 +30,57 @@
         <p>Status: {{ loan.status }}</p>
       </li>
     </ul>
+    <h2>Meteorites</h2>
+    <ul>
+      <li v-for="meteorite in meteorites" :key="meteorite.monnigNumber">
+        <h3>Meteorite ID: {{ meteorite.monnigNumber }}</h3>
+        <p>Name: {{ meteorite.name }}</p>
+        <p>Country: {{ meteorite.country }}</p>
+        <p>MClass: {{ meteorite.mClass }}g</p>
+        <p>MGroup: {{ meteorite.mGroup }}</p>
+        <p>Year Found: {{ meteorite.yearFound }}</p>
+        <p>Weight: {{ meteorite.weight }}</p>
+        <p>Loan Status: {{ meteorite.loanStatus }}</p>
+      </li>
+    </ul>
+    <h2>Sample History</h2>
+    <ul>
+      <li v-for="sampleHist in sampleHistory" :key="sampleHist.sampleHistoryId">
+        <h3>Sample History ID: {{sampleHist.sampleHistoryId}}</h3>
+        <p>Sample Date: {{sampleHist.sampleDate}}</p>
+        <p>Sample Category: {{sampleHist.sampleCategory}}</p>
+        <p>Sample Notes: {{sampleHist.sampleNotes}}</p>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup>
 import searchBar from "../components/searchBar.vue";
 import { ref } from 'vue';
-import { searchLoans } from '../apis/loans'; // Assuming this function is properly exported
+import { searchLoans } from '../apis/loans';
+import { fetchMeteorites } from '../apis/meteorites';
+import {fetchSampleHistory} from '../apis/sampleHistory'; // Assuming this function is properly exported
 
 const loans = ref([]);
+const meteorites = ref([]);
+const sampleHistory = ref([]);
 
 const performSearch = async ({ attribute, query }) => {
   try {
-    const response = await searchLoans(attribute, query);
-    loans.value = response.data;  // Ensure this matches the API response structure
-    console.log("Loans loaded:", loans.value); // Log to confirm data structure
+    if(attribute === 'meteorites'){
+      const response = await fetchMeteorites(attribute, query);
+      meteorites.value = response.data; //Ensure this matches the API response structure
+      console.log("Meteorites loaded:", meteorites.value);
+    } else if(attribute === 'sampleHistory'){
+      const response = await fetchSampleHistory(attribute, query);
+      sampleHistory.value = response.data;
+      console.log("Sample History loaded:", sampleHistory.value);
+    } else{
+      const response = await searchLoans(attribute, query);
+      loans.value = response.data;  // Ensure this matches the API response structure
+      console.log("Loans loaded:", loans.value); // Log to confirm data structure
+    }
   } catch (error) {
     console.error('Search failed:', error);
   }
