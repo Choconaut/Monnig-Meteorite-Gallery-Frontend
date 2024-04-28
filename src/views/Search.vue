@@ -7,6 +7,12 @@
 
     <searchBar @search="performSearch" />
 
+    <div class ="centerRightGroup">
+      <router-link :to="{ name: 'home'}" class="homeLink">
+        <span>Home</span>
+      </router-link>
+    </div>
+
     <div class="rightGroup">
       <router-link :to="{ name: 'login' }" class="loginLink">
         <span>Login</span>
@@ -15,8 +21,6 @@
     
   </div>
   <div>
-    <h1>Home</h1>
-
     <h2>Meteorites</h2>
     <ul>
       <li v-for="meteorite in meteorites" :key="meteorite.MonnigNumber">
@@ -56,6 +60,7 @@
       </li>
     </ul>
   </div>
+
 </template>
 
 <script setup>
@@ -100,6 +105,11 @@ const performSearch = async ({ category, attribute, query }) => {
   text-decoration: none;
 }
 
+.homeLink {
+  color: #F6F6F6;
+  text-decoration: none;
+}
+
 .topBar {
   display: flex;
   align-items: center;
@@ -109,7 +119,7 @@ const performSearch = async ({ category, attribute, query }) => {
   background-color: #131921;
 }
 
-.leftGroup, .rightGroup {
+.leftGroup, .rightGroup , .centerRightGroup{
   flex: 1;
   display: flex;
   align-items: center;
@@ -124,8 +134,8 @@ const performSearch = async ({ category, attribute, query }) => {
   justify-content: flex-end;
 }
 
-.centerItem{
-  justify-content: center;
+.centerRightGroup{
+  justify-content: flex-end;
 }
 
 .logo {
