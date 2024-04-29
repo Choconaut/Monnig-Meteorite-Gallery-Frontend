@@ -7,7 +7,7 @@
 
     <searchBar @search="performSearch" />
 
-    <div class ="centerRightGroup">
+    <div class="centerRightGroup">
       <router-link :to="{ name: 'home'}" class="homeLink">
         <span>Home</span>
       </router-link>
@@ -19,6 +19,8 @@
       </router-link>
     </div>
     
+<!--Id, name, country -->
+
   </div>
   <div>
     <h2>Meteorites</h2>
@@ -82,14 +84,20 @@ const performSearch = async ({ category, attribute, query }) => {
     if(category === 'meteorite'){
       const meteoriteResponse = await fetchMeteorites(attribute, query);
       meteorites.value = meteoriteResponse.data; //Ensure this matches the API response structure
+      loans.value = null;
+      sampleHistory.value = null;
       console.log("Meteorites loaded:", meteorites.value);
     } else if(category === 'sampleHistory'){
+      loans.value = null;
+      meteorites.value = null;
       const sampleHistoryResponse = await fetchSampleHistory(attribute, query);
       sampleHistory.value = sampleHistoryResponse.data;
       console.log("Sample History loaded:", sampleHistory.value);
     } else {
       const loansResponse = await searchLoans(attribute, query);
       loans.value = loansResponse.data;  // Ensure this matches the API response structure
+      meteorites.value = null;
+      sampleHistory.value = null;
       console.log("Loans loaded:", loans.value); // Log to confirm data structure
     }
   } catch (error) {
@@ -113,7 +121,7 @@ const performSearch = async ({ category, attribute, query }) => {
 .topBar {
   display: flex;
   align-items: center;
-  width: 98%;
+  width: 97%;
   height: 2.5rem;
   padding: 1rem;
   background-color: #131921;

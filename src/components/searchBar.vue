@@ -35,9 +35,9 @@ export default {
       searchQuery: "",
       attributes:{
         meteorite: [
-          {value: "MonnigNumber", text: "Monnig Number"},
-          {value: "Name", text: "Name"},
-          {value: "Country", text: "Country"},
+          {value: "monnigNumber", text: "Monnig Number"},
+          {value: "name", text: "Name"},
+          {value: "country", text: "Country"},
           {value: "MClass", text: "Class"},
           {value: "MGroup", text: "Group"},
           {value: "yearFound", text: "Year Found"},
@@ -49,9 +49,10 @@ export default {
           {value: "loanId", text: "Loan ID"},
           {value: "loaneeName", text: "Name"},
           {value: "loaneeEmail", text: "Email"},
+          {value: "loaneeInstitution", text: "Institution"},
           {value: "loaneeAddress", text: "Address"},
-          {value: "loanStartDate", text: "Start Date"},
-          {value: "loanDueDate", text: "Loan Due Date"},
+          {value: "loanStartdate", text: "Start Date"},
+          {value: "loanDuedate", text: "Due Date"},
           {value: "trackingNumber", text: "Tracking Number"},
           {value: "status", text: "Status"}
         ],
