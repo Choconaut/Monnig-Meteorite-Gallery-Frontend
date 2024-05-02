@@ -13,3 +13,4 @@ const fetchSampleHistory = async (attribute, query) => {
 };
 
 export { fetchSampleHistory};
+
