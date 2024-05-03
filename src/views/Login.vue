@@ -18,16 +18,16 @@
 
     <label>Email Address</label>
     <Field
-      name="account"
+      name="username"
       as="input"
       type="text"
-      label="account"
+      label="username"
       placeholder="Email Address"
-      v-model="loginInfo.account"
+      v-model="loginInfo.username"
     />
 
     <ErrorMessage 
-      name="account" 
+      name="username" 
         as="div"
     ></ErrorMessage>
 
@@ -46,7 +46,7 @@
       as="div"
     ></ErrorMessage>
 
-    <button>Log In</button>
+    <button type="submit">Log In</button>
     <div class="cAccount">
       <!--Change to vue router if create is needed-->
       <a class="link" href="#create.html">Create Account</a>
@@ -59,16 +59,17 @@ import utils from "../utils";
 import searchBar from "../components/searchBar.vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+// import userApi from "../api/userApi";
 
 export default {
   data() {
     return {
       loginInfo: {
-        account: '',
+        username: '',
         password: ''
       },
       validationSchema: yup.object({
-        account: yup.string().required().email().label("Email"),
+        username: yup.string().required().email().label("Email"),
         password: yup.string().required().min(3).label("Password"), //password is min length 3
       }),
     };
@@ -81,6 +82,7 @@ export default {
   },
   methods: {
     login(values) {
+      console.log(this.loginInfo)
       utils.userLoginUtils.login(values);
     },
   },
