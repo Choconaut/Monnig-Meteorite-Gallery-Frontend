@@ -1,4 +1,4 @@
-import { createPinia } from 'pinia';
+import { createPinia } from "pinia";
 export default function setupPinia(app) {
-app.use(createPinia());
+  app.use(createPinia());
 }

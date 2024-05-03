@@ -59,7 +59,7 @@ import utils from "../utils";
 import searchBar from "../components/searchBar.vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
-// import userApi from "../api/userApi";
+import userApi from "../apis/userApi"
 
 export default {
   data() {
@@ -82,8 +82,9 @@ export default {
   },
   methods: {
     login(values) {
-      console.log(this.loginInfo)
-      utils.userLoginUtils.login(values);
+      console.log(this.loginInfo)              //check what's being sent
+      // utils.userLoginUtils.login(values);
+      userApi.login(values)
     },
   },
 };

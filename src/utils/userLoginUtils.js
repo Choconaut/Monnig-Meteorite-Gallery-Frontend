@@ -1,33 +1,45 @@
-import cache from "../utils/cacheUtils";
-import router from "../router";
-import userApi from "../apis/userApi";
-import useUserStore from "../store/userStore";
-import autoloadDynamicRoutes from "../router/loadDynamicRoutes";
+// import cache from "../utils/cacheUtils";
+// import router from "../router";
+// import userApi from "../apis/userApi";
+// import useUserStore from "../store/userStore";
+// import autoloadDynamicRoutes from "../router/loadDynamicRoutes";
 
-export async function login(loginInfo) {
-  const {
-    result: { token },
-  } = await userApi.login(loginInfo);
+// export async function login(loginInfo) {
+//   try {
+//       // Make the API request
+//       const response = await userApi.login(loginInfo);
 
-  cache.set("login_token", { token }, 600); // token is valid for 600 sec
+//       // Deconstruct to get data directly
+//       const { flag, message, data } = response;
 
-  // Once the user is successfully logged in
-  // get user info and save it to Pinia, then we can have access to user's permission list in different components
-  const userStore = useUserStore();
-  await userStore.getUserInfo();
+//       // Check if the flag indicates a successful login
+//       if (flag) {
+//           // Store the token in cache
+//           cache.set("login_token", { token: data.token }, 600); // token is valid for 600 seconds
 
-  autoloadDynamicRoutes(router);
+//           // Use the token to get user info and save it to Pinia
+//           const userStore = useUserStore();
+//           await userStore.setUserInfo(data.userInfo, data.token); // Assuming setUserInfo method needs to be implemented
 
-  const routeName = "home";
-  router.push({ name: routeName });
-}
-export function logout() {
-  cache.remove("login_token");
+//           // Load dynamic routes based on user permissions
+//           autoloadDynamicRoutes(router);
 
-  // remove user info from Pinia store
-  const userStore = useUserStore();
-  userStore.userInfo = null;
+//           // Redirect to the home page
+//           router.push({ name: "home" });
+//       } else {
+//           throw new Error('Login failed: ' + message);
+//       }
+//   } catch (error) {
+//       console.error('Error during login:', error);
+//       throw error;  // Re-throw to handle it or show error messages in the UI
+//   }
+// }
 
-  // redirect to root page
-  router.push("/home");
-}
+// export function logout() {
+//   cache.remove("login_token");
+
+//   const userStore = useUserStore();
+//   userStore.clearUserInfo(); // Assuming clearUserInfo method needs to be implemented
+
+//   router.push("/home");
+// }
