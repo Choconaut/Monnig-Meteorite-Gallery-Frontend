@@ -3,8 +3,8 @@
     <div class="search-bar">
       <select v-model="selectedCategory" class="search-select" @change="updateAttributes">
         <option value="meteorite">Meteorite</option>
-        <option value="loan">Loan</option>
-        <option value="sampleHistory">Sample History</option>
+        <option  value="loan">Loan</option> <!-- add v-if="isAuthenticated" Must be authenicated to view-->
+        <option  value="sampleHistory">Sample History</option>
       </select>
       <select v-model="selectedAttribute" class="search-select">
         <option v-for="attribute in currentAttributes" :value="attribute.value" :key="attribute.value">
@@ -69,7 +69,10 @@ export default {
   computed: {
     currentAttributes() {
       return this.attributes[this.selectedCategory];
-    }
+    },
+    // isAuthenticated() {
+    //   return auth.isLoggedIn(); // Ensure this method returns the authentication state
+    // }
   },
   methods: {
     updateAttributes() {

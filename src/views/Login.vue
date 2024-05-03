@@ -3,26 +3,89 @@
     <div class="shape"></div>
     <div class="shape"></div>
   </div>
-  <form class="box">
+  <Form 
+    @submit="login" 
+    :validation-schema="validationSchema" 
+    v-slot="{ errors }"
+    class="box"
+  >
+
     <router-link :to="{ name: 'search' }" class="link">
       <img class="return-img" src="/cometL.png" />
     </router-link>
 
     <h3>Sign In</h3>
 
-    <label for="username">Username</label>
-    <input type="text" placeholder="Username" />
+    <label>Email Address</label>
+    <Field
+      name="account"
+      as="input"
+      type="text"
+      label="account"
+      placeholder="Email Address"
+      v-model="loginInfo.account"
+    />
+
+    <ErrorMessage 
+      name="account" 
+        as="div"
+    ></ErrorMessage>
 
     <label for="password">Password</label>
-    <input type="password" placeholder="Password" />
+    <Field
+      name="password"
+      as="input"
+      type="password"
+      label="Password"
+      placeholder="Password"
+      v-model="loginInfo.password"
+    />
+
+    <ErrorMessage 
+      name="password" 
+      as="div"
+    ></ErrorMessage>
 
     <button>Log In</button>
-    <div class="account">
+    <div class="cAccount">
       <!--Change to vue router if create is needed-->
       <a class="link" href="#create.html">Create Account</a>
     </div>
-  </form>
+  </Form>
 </template>
+
+<script>
+import utils from "../utils";
+import searchBar from "../components/searchBar.vue";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
+
+export default {
+  data() {
+    return {
+      loginInfo: {
+        account: '',
+        password: ''
+      },
+      validationSchema: yup.object({
+        account: yup.string().required().email().label("Email"),
+        password: yup.string().required().min(3).label("Password"), //password is min length 3
+      }),
+    };
+  },
+  components: {
+    searchBar,
+    Form,
+    Field,
+    ErrorMessage,
+  },
+  methods: {
+    login(values) {
+      utils.userLoginUtils.login(values);
+    },
+  },
+};
+</script>
 
 <style scoped>
 form {
@@ -84,7 +147,7 @@ button {
   cursor: pointer;
 }
 
-.account {
+.cAccount {
   text-align: center;
   padding: 1rem;
 }

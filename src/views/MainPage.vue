@@ -44,7 +44,7 @@ const meteorites = ref([]);
 onMounted(async () => {
   try {
     const response = await fetchAllMeteorites();
-    meteorites.value = response.data;
+    meteorites.value = response.data.content;
     console.log("All Meteors loaded:", meteorites.value);
   } catch (error){
     console.error('Failed to load all meteorites:', error);
