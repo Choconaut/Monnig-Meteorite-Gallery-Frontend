@@ -22,7 +22,7 @@
     <h1>All Meteorites</h1>
     <ul>
       <li v-for="meteorite in meteorites" :key="meteorite.monnigNumber">
-        <h3>Meteorite ID: {{ meteorite.monnigNumber }}</h3>
+        <h3>Meteorite ID: {{ meteorite.MonnigNumber }}</h3>
         <p>Name: {{ meteorite.Name }}</p>
         <p>Country: {{ meteorite.Country }}</p>
         <p>MClass: {{ meteorite.MClass }}</p>
