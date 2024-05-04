@@ -16,7 +16,7 @@ const fetchMeteorites = async (attribute, query) => {
 export { fetchMeteorites };
 
 const fetchAllMeteorites = async () => {
-  const url = `http://localhost:8080/api/v1/meteorites`;
+  const url = `https://monnig-meteor-online.azurewebsites.net/api/v1/meteorites`;
   try {
     const response = await fetch(url);
     if (!response.ok) {
