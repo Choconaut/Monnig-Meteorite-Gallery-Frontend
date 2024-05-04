@@ -1,9 +1,9 @@
 const info = async () => {
-    return await fetch('http://localhost:8080/api/v1/users/login').then((r) => r.json());
+    return await fetch('https://monnig-meteor-online.azurewebsites.net/api/v1/users/login').then((r) => r.json());
   };
   
   const login = async (loginInfo) => {
-    return await fetch('http://localhost:8080/api/v1/users/login', {
+    return await fetch('https://monnig-meteor-online.azurewebsites.net:8080/api/v1/users/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
