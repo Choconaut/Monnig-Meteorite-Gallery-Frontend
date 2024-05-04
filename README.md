@@ -1,2 +1,2 @@
-# Monning-Meteorite-Gallery-Frontend
+# Monnig-Meteorite-Gallery-Frontend
  Frontend for Monnig_Meteorite_Gallery
